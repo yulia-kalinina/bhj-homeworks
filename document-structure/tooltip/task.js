@@ -4,22 +4,29 @@ allTooltip.forEach((el) => {
   el.addEventListener("click", function (event) {
     event.preventDefault();
 
+    let linkTitleAttr = el.getAttribute("title");
+
+    let addDiv = document.createElement("div");
+    addDiv.className = "tooltip";
+    addDiv.textContent = linkTitleAttr;
+
     let tooltip = document.querySelector(".tooltip");
+
     if (tooltip) {
       tooltip.remove();
     }
 
-    el.insertAdjacentHTML(
-      "afterEnd",
-      '<div class="tooltip tooltip_active"></div>'
-    );
+    if (tooltip && tooltip.textContent === linkTitleAttr) {
+      tooltip.classList.toggle("tooltip_active");
+      return;
+    }
 
-    let tooltipNew = document.querySelector(".tooltip");
-    tooltipNew.textContent = el.getAttribute("title");
+    el.appendChild(addDiv);
+    addDiv.classList.add("tooltip_active");
 
     const { left } = el.getBoundingClientRect();
-    tooltipNew.style.position = "absolute";
+    addDiv.style.position = "absolute";
     let allLeft = left + "px";
-    tooltipNew.style.left = allLeft;
+    addDiv.style.left = allLeft;
   });
 });
