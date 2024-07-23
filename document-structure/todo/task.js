@@ -8,9 +8,10 @@ btn.addEventListener("click", (e) => {
   let addDiv = document.createElement("div");
   addDiv.className = "task";
 
+  taskInput.value = taskInput.value.trim();
   let inputText = taskInput.value;
 
-  if (!taskInput.value) {
+  if (!inputText) {
     return;
   }
 
@@ -22,12 +23,10 @@ btn.addEventListener("click", (e) => {
   taskList.appendChild(addDiv);
   taskInput.value = "";
 
-  const taskRemove = Array.from(document.querySelectorAll(".task__remove"));
+  let taskRemove = addDiv.querySelector(".task__remove");
 
-  taskRemove.forEach((elem) => {
-    elem.addEventListener("click", (e) => {
-      e.preventDefault();
-      elem.parentElement.remove();
-    });
+  taskRemove.addEventListener("click", (e) => {
+    e.preventDefault();
+    taskRemove.parentElement.remove();
   });
 });
