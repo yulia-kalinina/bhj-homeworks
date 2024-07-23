@@ -28,25 +28,26 @@ product.forEach((elem) => {
     let currentValue = quantityValue.textContent;
     let srcValue = productImage.src;
 
-    for (let i = 0; i < cartArr.length; i++) {
-      if (cartArr[i].dataset.id === elemId) {
-        let currentAddDiv = cartArr[i].querySelector(".cart__product-count");
-        currentAddDiv.textContent = +currentAddDiv.textContent + +currentValue;
-        return;
-      }
+    const productInCart = cartArr.find(
+      (element) => element.dataset.id === elemId
+    );
+
+    if (productInCart) {
+      let currentAddDiv = productInCart.querySelector(".cart__product-count");
+      currentAddDiv.textContent = +currentAddDiv.textContent + +currentValue;
+    } else {
+      let addDiv = document.createElement("div");
+      addDiv.className = "cart__product";
+      addDiv.dataset.id = elemId;
+
+      addDiv.innerHTML =
+        '<img class="cart__product-image" src="' +
+        srcValue +
+        '"></img><div class="cart__product-count">' +
+        currentValue +
+        "</div>";
+
+      cart.append(addDiv);
     }
-
-    let addDiv = document.createElement("div");
-    addDiv.className = "cart__product";
-    addDiv.dataset.id = elemId;
-
-    addDiv.innerHTML =
-      '<img class="cart__product-image" src="' +
-      srcValue +
-      '"></img><div class="cart__product-count">' +
-      currentValue +
-      "</div>";
-
-    cart.append(addDiv);
   });
 });
