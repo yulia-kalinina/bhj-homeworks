@@ -21,7 +21,7 @@ allTooltip.forEach((el) => {
       return;
     }
 
-    el.appendChild(addDiv);
+    el.insertAdjacentElement("afterEnd", addDiv);
     addDiv.classList.add("tooltip_active");
 
     const { left } = el.getBoundingClientRect();
