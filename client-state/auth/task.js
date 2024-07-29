@@ -13,21 +13,21 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const xhr = new XMLHttpRequest();
+  xhr.responseType = "json";
 
-  xhr.addEventListener("readystatechange", () => {
-    if (xhr.readyState === xhr.DONE) {
-      const data = JSON.parse(xhr.responseText);
-      let status = data["success"];
+  xhr.addEventListener("load", () => {
+    const data = xhr.response;
+    let status = data["success"];
+    form.reset();
 
-      if (status === false) {
-        alert("Неверный логин/пароль");
-      } else {
-        let userId = data["user_id"];
-        localStorage.userId = userId;
+    if (status === false) {
+      alert("Неверный логин/пароль");
+    } else {
+      let userId = data["user_id"];
+      localStorage.userId = userId;
 
-        welcome.classList.add("welcome_active");
-        spanWithId.textContent = userId;
-      }
+      welcome.classList.add("welcome_active");
+      spanWithId.textContent = userId;
     }
   });
 
